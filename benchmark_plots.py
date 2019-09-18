@@ -3,7 +3,7 @@ import nestpy
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.axes as axes
-
+import os
 
 #Detector identification
 detector = nestpy.DetectorExample_XENON10()
@@ -79,6 +79,11 @@ fields = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000]
 energies = np.logspace(-1, 4, 2000)
 energies = np.broadcast_to(energies, (len(fields), len(energies)))
 
+file_path = './Images/'
+directory = os.path.dirname(file_path)
+if not os.path.exists(directory):
+    os.makedirs(directory)
+
 # ## Nuclear Recoils
 def nr_subplot(x, y_photons, y_electrons, driftFields):
     plt.figure(1, figsize=(9,6))
@@ -109,10 +114,10 @@ def nr_subplot(x, y_photons, y_electrons, driftFields):
     #Here's where we are actually saving our plots! 
     plt.figure(1)
     plt.tight_layout()
-    plt.savefig('nr_LY.png')
+    plt.savefig(os.path.join(file_path, 'nr_LY.png'))
     plt.figure(2)
     plt.tight_layout()
-    plt.savefig('nr_QY.png')
+    plt.savefig(os.path.join(file_path, 'nr_QY.png'))
 
 
 def beta_subplot(x, y_photons, y_electrons, driftFields):
@@ -144,10 +149,10 @@ def beta_subplot(x, y_photons, y_electrons, driftFields):
     #Here's where we are actually saving our plots! 
     plt.figure(3)
     plt.tight_layout()
-    plt.savefig('beta_LY.png')
+    plt.savefig(os.path.join(file_path, 'beta_LY.png'))
     plt.figure(4)
     plt.tight_layout()
-    plt.savefig('beta_QY.png')
+    plt.savefig(os.path.join(file_path, 'beta_QY.png'))
 
 
 # ## $\gamma$ electron recoils
@@ -180,10 +185,10 @@ def gamma_subplot(x, y_photons, y_electrons, driftFields):
     #Here's where we are actually saving our plots! 
     plt.figure(5)
     plt.tight_layout()
-    plt.savefig('gamma_LY.png')
+    plt.savefig(os.path.join(file_path, 'gamma_LY.png'))
     plt.figure(6)
     plt.tight_layout()
-    plt.savefig('gamma_QY.png')
+    plt.savefig(os.path.join(file_path, 'gamma_QY.png'))
 
 
 # ## $\alpha$-particle recoils
@@ -218,10 +223,10 @@ def alpha_subplot(x, y_photons, y_electrons, driftFields):
     #Here's where we are actually saving our plots! 
     plt.figure(7)
     plt.tight_layout()
-    plt.savefig('alpha_LY.png')
+    plt.savefig(os.path.join(file_path, 'alpha_LY.png'))
     plt.figure(8)
     plt.tight_layout()
-    plt.savefig('alpha_QY.png')
+    plt.savefig(os.path.join(file_path, 'alpha_QY.png'))
 
 
 # ## $^{206}$Pb nuclear recoils
@@ -253,15 +258,16 @@ def Pb_subplot(x, y_photons, y_electrons, driftFields):
     #Here's where we are actually saving our plots! 
     plt.figure(9)
     plt.tight_layout()
-    plt.savefig('208Pb_LY.png')
+    plt.savefig(os.path.join(file_path, '208Pb_LY.png'))
     plt.figure(10)
     plt.tight_layout()
-    plt.savefig('208Pb_QY.png')
+    plt.savefig(os.path.join(file_path, '208Pb_QY.png'))
 
 
 #Doing the actual functions
 # The following are the energy and field ranges for each interaction in the detector we care about showing.
 def makeplots():
+    num_interactions = 5 #number of types of interactions we're studying, so we can make enough plots.
     nr_electrons = ElectronYield(interaction='nr', energy=energies.T, drift_field = fields).T/energies
     nr_photons = PhotonYield(interaction='nr', energy=energies.T, drift_field = fields).T/energies
     nr_subplot(energies, nr_photons, nr_electrons, fields)
@@ -281,3 +287,5 @@ def makeplots():
     Pb_electrons = ElectronYield(interaction='ion', Z=82, A = 206, energy=energies.T, drift_field = fields).T/energies
     Pb_photons = PhotonYield(interaction='ion',Z=82, A=206, energy=energies.T, drift_field = fields).T/energies
     Pb_subplot(energies, Pb_photons, Pb_electrons, fields)
+
+makeplots()
