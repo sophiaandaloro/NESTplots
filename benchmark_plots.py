@@ -288,4 +288,4 @@ def makeplots():
     Pb_photons = PhotonYield(interaction='ion',Z=82, A=206, energy=energies.T, drift_field = fields).T/energies
     Pb_subplot(energies, Pb_photons, Pb_electrons, fields)
 
-makeplots()
+# makeplots()
