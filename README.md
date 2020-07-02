@@ -1,4 +1,9 @@
 # NESTplots
 This code is here to show the process of performing computations for benchmark plots. 
-get_images.py uses Flask to view each image saved in URL form, for later implementation of updating these plots automatically.
-To run everything, just run get_images.py, and go to localhost:5000 with the correct arguments for whatever image you're looking to see.
+Updated 7/2/20 to include better documentation. 
+
+## Setup your environment
+1. Open your terminal, change to the directory you want to work in.
+2. Create or activate python 3.7 environment: `conda activate <envname>`
+3. Clone this repository: `git clone https://github.com/sophiaandaloro/NESTplots/` 
+4. Install requirements: `pip install requirements.txt` 
